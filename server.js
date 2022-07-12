@@ -1,6 +1,8 @@
 const express = require("express");
 const { animals } = require("./data/animals");
 
+const PORT = process.env.PORT || 3001;
+
 const app = express();
 
 function filterByQuery(query, animalsArray) {
@@ -63,6 +65,6 @@ app.get("/api/animals", (req, res) => {
 // 1. a route that tells where the data will come from
 // 2. a callback that will execute every time that route receives a GET request
 
-app.listen(3001, () => {
-	console.log("Express server on port 3001");
+app.listen(PORT, () => {
+	console.log(`Express server now live on port ${PORT}`);
 });
