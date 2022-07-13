@@ -49,6 +49,12 @@ function filterByQuery(query, animalsArray) {
 	return filteredResults;
 }
 
+function findById(id, animalsArray) {
+	const result = animalsArray.filter((animal) => animal.id === id)[0];
+	// index is there because array.filter always returns an array
+	return result;
+}
+
 // important to not include the dot
 app.get("/api/animals", (req, res) => {
 	let results = animals;
@@ -64,6 +70,15 @@ app.get("/api/animals", (req, res) => {
 // app.get takes two parameters:
 // 1. a route that tells where the data will come from
 // 2. a callback that will execute every time that route receives a GET request
+
+app.get("/api/animals/:id", (req, res) => {
+	const result = findById(req.params.id, animals);
+	if (result) {
+		res.json(result);
+	} else {
+		res.send(404);
+	}
+});
 
 app.listen(PORT, () => {
 	console.log(`Express server now live on port ${PORT}`);
