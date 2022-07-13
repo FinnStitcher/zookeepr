@@ -1,9 +1,14 @@
 const express = require("express");
+const fs = require("fs");
+const path = require("path");
 const { animals } = require("./data/animals");
 
 const PORT = process.env.PORT || 3001;
 
 const app = express();
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 function filterByQuery(query, animalsArray) {
 	let filteredResults = animalsArray;
@@ -55,6 +60,40 @@ function findById(id, animalsArray) {
 	return result;
 }
 
+function createNewAnimal(body, animalsArray) {
+    const animal = body;
+    animalsArray.push(animal);
+
+    // now we have to actually get it into the json file
+    fs.writeFileSync(
+        path.join(__dirname, './data/animals.json'),
+        JSON.stringify({ animals: animalsArray }, null, 2)
+    )
+    // __dirname = the directory this is being run from; we use path.join to create an absolute address
+    // using JSON.stringify to process animalsArray
+    // the second 2 arguments mean 1. we dont want to edit the data, and 2. we want whitespace
+
+    // send the animal's info back
+    // this will go to the .post() route we established down below, so the user can see it
+    return animal;
+}
+
+function validateAnimal(animal) {
+    if (!animal.name || typeof animal.name !== 'string') {
+      return false;
+    }
+    if (!animal.species || typeof animal.species !== 'string') {
+      return false;
+    }
+    if (!animal.diet || typeof animal.diet !== 'string') {
+      return false;
+    }
+    if (!animal.personalityTraits || !Array.isArray(animal.personalityTraits)) {
+      return false;
+    }
+    return true;
+  }
+
 // important to not include the dot
 app.get("/api/animals", (req, res) => {
 	let results = animals;
@@ -79,6 +118,23 @@ app.get("/api/animals/:id", (req, res) => {
 		res.send(404);
 	}
 });
+
+// the endpoint /api/animals can take GET and POST requests
+app.post('/api/animals', (req, res) => {
+    // req.body is the incoming content
+    // generate id
+    req.body.id = animals.length.toString();
+
+    if (!validateAnimal(req.body)) {
+        res.status(400).send('Improper formatting.');
+    } else {
+        const animal = createNewAnimal(req.body, animals);
+        // calling createNewAnimal and giving it the relevant data so the animal will be added to the array/json
+        // createNewAnimal() will return the animal data after it's added, and it'll go into that const
+
+        res.json(animal);        
+    };
+})
 
 app.listen(PORT, () => {
 	console.log(`Express server now live on port ${PORT}`);
