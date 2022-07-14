@@ -9,6 +9,7 @@ const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.static('public'));
 
 function filterByQuery(query, animalsArray) {
 	let filteredResults = animalsArray;
@@ -110,6 +111,8 @@ app.get("/api/animals", (req, res) => {
 // 1. a route that tells where the data will come from
 // 2. a callback that will execute every time that route receives a GET request
 
+// apparently this needs to go after the general query-based endpoint up there
+// unsure why but whatever
 app.get("/api/animals/:id", (req, res) => {
 	const result = findById(req.params.id, animals);
 	if (result) {
@@ -134,6 +137,10 @@ app.post('/api/animals', (req, res) => {
 
         res.json(animal);        
     };
+});
+
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "./index.html"));
 })
 
 app.listen(PORT, () => {
