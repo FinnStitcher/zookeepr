@@ -16,7 +16,7 @@ router.get("/zookeepers", (req, res) => {
 // wildcard in case they try to visit a nonexistent page
 // this needs to go after everything else
 router.get("*", (req, res) => {
-	res.sendFile(path.join(__dirname, "./public/index.html"));
+	res.sendFile(path.join(__dirname, "../../public/index.html"));
 });
 
 module.exports = router;

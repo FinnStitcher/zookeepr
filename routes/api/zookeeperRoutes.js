@@ -26,7 +26,7 @@ router.get("/zookeepers/:id", (req, res) => {
 router.post("/zookeepers", (req, res) => {
 	req.body.id = zookeepers.length.toString();
 
-	if (!validateAnimal(req.body)) {
+	if (!validateKeeper(req.body)) {
 		res.status(400).send("Improper formatting.");
 	} else {
 		const zookeeper = createNewKeeper(req.body, zookeepers);

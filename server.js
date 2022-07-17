@@ -20,5 +20,5 @@ app.use("/api", apiRoutes);
 app.use("/", htmlRoutes);
 
 app.listen(PORT, () => {
-	console.log(`Express server now live on port ${PORT}`);
+	console.log(`Express server now live at http://localhost:${PORT}/`);
 });

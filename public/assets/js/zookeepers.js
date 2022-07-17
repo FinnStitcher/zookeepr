@@ -29,7 +29,6 @@ const getZookeepers = () => {
       return response.json();
     })
     .then(zookeeperArr => {
-      console.log(zookeeperArr);
       printResults(zookeeperArr);
     });
 };
