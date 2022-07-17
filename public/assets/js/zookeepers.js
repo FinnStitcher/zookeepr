@@ -1,8 +1,6 @@
 const $displayArea = document.querySelector('#display-area');
 
 const printResults = resultArr => {
-  console.log(resultArr);
-
   const animalHTML = resultArr.map(({ id, name, age, favoriteAnimal }) => {
     return `
   <div class="col-12 col-md-5 mb-3">

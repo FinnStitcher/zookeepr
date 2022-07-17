@@ -44,9 +44,6 @@ const handleAnimalFormSubmit = (event) => {
 			} else {
 				alert("Error: " + response.statusText);
 			}
-		})
-		.then((postResponse) => {
-			console.log(postResponse);
 		});
 };
 
@@ -73,9 +70,6 @@ const handleZookeeperFormSubmit = (event) => {
 			} else {
 				alert("Error: " + response.statusText);
 			}
-		})
-		.then((postResponse) => {
-			console.log(postResponse);
 		});
 };
 
