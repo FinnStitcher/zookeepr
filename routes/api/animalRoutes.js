@@ -19,7 +19,7 @@ router.get("/animals", (req, res) => {
 // 1. a route that tells where the data will come from
 // 2. a callback that will execute every time that route receives a GET request
 
-// routerarently this needs to go after the general query-based endpoint up there
+// apparently this needs to go after the general query-based endpoint up there
 // unsure why but whatever
 router.get("/animals/:id", (req, res) => {
 	const result = findById(req.params.id, animals);
@@ -32,7 +32,7 @@ router.get("/animals/:id", (req, res) => {
 
 // the endpoint /api/animals can take GET and POST requests
 // somehow between the frontend, where the data is converted into a string, and here, the data is becoming a javascript object again
-// removing the JSON.stringify() call in the frontend DOES break everything, but i don't understand what's hrouterening between here and there
+// removing the JSON.stringify() call in the frontend DOES break everything, but i don't understand what's happening between here and there
 // maybe it's to do with the express.json() call up above?
 router.post("/animals", (req, res) => {
 	// req.body is the incoming content
@@ -50,6 +50,6 @@ router.post("/animals", (req, res) => {
 	}
 });
 
-// the only unique data in here is the Router() instance
-// all those routes are just method calls, nothing is stored, and we don't need to reuse them anyway
+// exporting router and then importing it in server.js lets the server access these routes
+// we ARE declaring data, apparently! i think calling get() and post() IS attaching things to the Router instance
 module.exports = router;
