@@ -46,8 +46,10 @@ const getAnimals = (formData = {}) => {
 				return alert("Error: " + response.statusText);
 			} else {
 				return response.json();
-				// response.json() = turn the response into stringified json
-                // it seems like stringified json is being parsed back into js objects automatically in a lot of places. this greatly confuses me
+				// response.json() is part of the Fetch API, not express
+                // which is obvious now that i think about it
+                // response.json(), in context of FETCH, means it's parsing a JSON response into a javascript object, not the other way around
+                // this is strange and confusing given i am working with express at the same time, which seems to do the opposite with its own .json() method
 			}
 		})
 		.then((animalData) => {
